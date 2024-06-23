@@ -37,17 +37,30 @@ public class Lexer {
                     tokens.add(new Token(TokenType.OPERATOR, Character.toString(c)));
                     current++;
                     break;
-                case "\"\"":
-                    tokens.add(new Token(TokenType.STRING, readString());
+                case '""':
+                    tokens.add(new Token(TokenType.STRING, Character.readString(c)));
                     break;
                 case '%':
                     tokens.add(new Token(TokenType.REFERENCES, readReference()));
-
+                default:
+                    if( isDigit(c)){
+                        tokens.add(new Token(TokenType.NUMBER), readNumber());
+                    }
 
             }
         }
 
 
+    }
+
+    private String readNumber(){
+        StringBuilder builder = new StringBuilder();
+        current++;
+        while (current < input.length() && input.charAt(current) != '"') {
+            builder.append(input.charAt(current));
+            current++;
+        }
+        return builder.toString();
     }
 
     private String readReference() {
@@ -66,11 +79,11 @@ public class Lexer {
     }
 
     private boolean isAlpha(char c){
-        return ('a' <= c & c <= 'z') || ('a' <= c & c <= 'z');
+        return ('a' <= c & c <= 'z') || ('A' <= c & c <= 'Z');
     }
 
     private boolean isDigit(char c){
-        return false;
+        return ('0' <= c & c <= '9');
     }
 
     private String readString() {
