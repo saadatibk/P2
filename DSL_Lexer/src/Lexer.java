@@ -56,7 +56,7 @@ public class Lexer {
     private String readNumber(){
         StringBuilder builder = new StringBuilder();
         current++;
-        while (current < input.length() && input.charAt(current) != '"') {
+        while (current < input.length() && (isDigit(input.charAt(current)))) {
             builder.append(input.charAt(current));
             current++;
         }
