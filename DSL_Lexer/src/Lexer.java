@@ -1,7 +1,8 @@
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
-public class Lexer {
+public class Lexer implements Iterable<Lexer.Token> {
 
     private final String input;
     private final List<Token> tokens;
@@ -37,20 +38,45 @@ public class Lexer {
                     tokens.add(new Token(TokenType.OPERATOR, Character.toString(c)));
                     current++;
                     break;
-                case '""':
-                    tokens.add(new Token(TokenType.STRING, Character.readString(c)));
+                case '"':
+                    tokens.add(new Token(TokenType.STRING, readString()));
                     break;
                 case '%':
                     tokens.add(new Token(TokenType.REFERENCES, readReference()));
                 default:
                     if( isDigit(c)){
-                        tokens.add(new Token(TokenType.NUMBER), readNumber());
+                        tokens.add(new Token(TokenType.NUMBER, readNumber()));
+                    } else if(isAlpha(c)){
+                        String identifier = readIdentifier();
+                        tokens.add(new Token(deriveTokenType(identifier),identifier));
+                    } else {
+                        throw new LexerException("Unsupported character:" + c);
                     }
 
             }
         }
 
 
+    }
+    private Lexer.TokenType deriveTokenType(String identifier) {
+        switch (identifier) {
+            case "config":
+                return TokenType.CONFIG;
+            case "update":
+                return TokenType.UPDATE;
+            default:
+                return TokenType.IDENTIFIER;
+        }
+    }
+
+    private String readIdentifier(){
+        StringBuilder builder = new StringBuilder();
+        current++;
+        while (current < input.length() && (isAlphaNumeric(input.charAt(current)))) {
+            builder.append(input.charAt(current));
+            current++;
+        }
+        return builder.toString();
     }
 
     private String readNumber(){
@@ -116,5 +142,10 @@ public class Lexer {
 
     enum TokenType {
         CONFIG, UPDATE, COMPUTE,SHOW, CONFIGS, STRING, NUMBER, IDENTIFIER, REFERENCES, ASSIGNMENT, OPERATOR;
+    }
+
+    @Override
+    public Iterator<Lexer.Token> iterator() {
+        return tokens.iterator();
     }
 }
