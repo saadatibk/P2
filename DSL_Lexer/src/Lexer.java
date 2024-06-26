@@ -20,17 +20,16 @@ public class Lexer implements Iterable<Lexer.Token> {
         while (current < input.length()) {
             char c = input.charAt(current);
             switch (c){
-                case ' ':
-                case '\t':
-                    case '\r':
-                        case '\n':
-                            current++;
-                            break;
+                case ' ': 
+                case '\t': 
+                case '\r':
+                case '\n': 
+                    current++;
+                    break;
                 case '=':
                     tokens.add(new Token(TokenType.ASSIGNMENT,"="));
                     current++;
                     break;
-
                 case '+':
                 case '-':
                 case '*':
@@ -52,6 +51,7 @@ public class Lexer implements Iterable<Lexer.Token> {
                     } else {
                         throw new LexerException("Unsupported character:" + c);
                     }
+                    break;
 
             }
         }
@@ -64,6 +64,12 @@ public class Lexer implements Iterable<Lexer.Token> {
                 return TokenType.CONFIG;
             case "update":
                 return TokenType.UPDATE;
+            case "compute":
+                return TokenType.COMPUTE;
+            case "show":
+                return TokenType.SHOW;
+            case "configs":
+                return TokenType.CONFIGS;
             default:
                 return TokenType.IDENTIFIER;
         }
