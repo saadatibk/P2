@@ -1,9 +1,9 @@
-import java.util.HashMap;
-import java.util.Map;
+//import java.util.HashMap;
+//import java.util.Map;
 
 public class Interpreter {
 
-    private final Map<String, Integer> valueTable = new HashMap();
+    //private final Map<String, Integer> valueTable = new HashMap();
     /* 
 
     int visit(ASTNode node){

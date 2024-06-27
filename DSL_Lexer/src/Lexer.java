@@ -30,11 +30,20 @@ public class Lexer implements Iterable<Lexer.Token> {
                     tokens.add(new Token(TokenType.ASSIGNMENT,"="));
                     current++;
                     break;
-                case '+':
+                case '+': 
+                    tokens.add(new Token(TokenType.PLUS, "+"));
+                    current++;
+                    break;
                 case '-':
+                    tokens.add(new Token(TokenType.MINUS, "-"));
+                    current++;
+                    break;
                 case '*':
+                    tokens.add(new Token(TokenType.MULTIPLY, "*"));
+                    current++;
+                    break;
                 case '/':
-                    tokens.add(new Token(TokenType.OPERATOR, Character.toString(c)));
+                    tokens.add(new Token(TokenType.DIVIDE, "/"));
                     current++;
                     break;
                 case '"':
@@ -147,7 +156,7 @@ public class Lexer implements Iterable<Lexer.Token> {
     }
 
     enum TokenType {
-        CONFIG, UPDATE, COMPUTE,SHOW, CONFIGS, STRING, NUMBER, IDENTIFIER, REFERENCES, ASSIGNMENT, OPERATOR;
+        CONFIG, UPDATE, COMPUTE,SHOW, CONFIGS, STRING, NUMBER, IDENTIFIER, REFERENCES, ASSIGNMENT, OPERATOR, LPAREN , RPAREN, PLUS, MULTIPLY, MINUS, DIVIDE ;
     }
 
     @Override

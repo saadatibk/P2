@@ -1,8 +1,8 @@
-import java.util.Set;
-import java.util.Stack;
+//import java.util.Set;
+//import java.util.Stack;
 
 public class SemanticAnalizer {
-    private final Stack<Set<String>> scopes = new Stack<>();
+   // private final Stack<Set<String>> scopes = new Stack<>();
     /* 
     void visit(ASTNode node){
         if (node instanceof BinaryOpNode){
