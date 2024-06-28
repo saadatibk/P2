@@ -7,14 +7,14 @@ public class BinaryOpNode extends ASTNode {
     public BinaryOpNode(ASTNode left, ASTNode right, Lexer.Token operation) {
         this.left = left;
         this.right = right;
-        this.operationToken = operationToken;
+        this.operationToken = operation;
 
     }
 
     public void print(String indent){
         System.out.print(indent + "Op{" + operationToken.value + '}');
         left.print(indent + indent);
-        right.print(indent + indent;)
+        right.print(indent + indent);
     }
 
 }

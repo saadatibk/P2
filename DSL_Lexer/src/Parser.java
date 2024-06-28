@@ -13,12 +13,25 @@ public class Parser {
     }
     
     public ASTNode parse() {
-        return term();
+        return expression();
+    }
+
+    private ASTNode expression() {
+        ASTNode node = term();
+
+        while (currentToken != null && (currentToken.type == Lexer.TokenType.PLUS || currentToken.type == Lexer.TokenType.MINUS)) {
+            Lexer.Token token = currentToken;
+            consume(currentToken.type);
+            node = new BinaryOpNode(node, term(), token);
+
+        }
+        return node;
     }
 
     private ASTNode term() {
         ASTNode node = factor();
-        while (currentToken.type == Lexer.TokenType.MULTIPLY || currentToken.type == Lexer.TokenType.DIVIDE) {
+
+        while (currentToken != null && (currentToken.type == Lexer.TokenType.MULTIPLY || currentToken.type == Lexer.TokenType.DIVIDE)) {
             Lexer.Token token = currentToken;
             consume(currentToken.type);
             node = new BinaryOpNode(node, factor(), token);
@@ -41,7 +54,9 @@ public class Parser {
     }
 
     private ASTNode factor() {
-       return null;
+        Lexer.Token token = currentToken;
+        consume(Lexer.TokenType.NUMBER);
+       return new NumberNode(token);
     }
 
 }
