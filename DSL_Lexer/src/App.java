@@ -10,5 +10,6 @@ public class App {
             System.out.println(token); 
         }
         Parser parser = new Parser(tokens);
+        ASTNode root = parser.parse();
     }
 }

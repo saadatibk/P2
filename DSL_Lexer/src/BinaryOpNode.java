@@ -1,14 +1,20 @@
-public class BinaryOpNode {
+public class BinaryOpNode extends ASTNode {
 
     ASTNode left;
-        ASTNode right;
-        Lexer.Token operationToken;
+    ASTNode right;
+    Lexer.Token operationToken;
 
-        public BinaryOpNode(ASTNode left, ASTNode right, Lexer.Token operation) {
-            this.left = left;
-            this.right = right;
-            this.operationToken = operationToken;
+    public BinaryOpNode(ASTNode left, ASTNode right, Lexer.Token operation) {
+        this.left = left;
+        this.right = right;
+        this.operationToken = operationToken;
 
-        }
+    }
+
+    public void print(String indent){
+        System.out.print(indent + "Op{" + operationToken.value + '}');
+        left.print(indent + indent);
+        right.print(indent + indent;)
+    }
 
 }
