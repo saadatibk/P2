@@ -1,8 +1,5 @@
 import java.util.List;
 
-import Lexer.TokenType;
-
-
 public class Parser {
 
     private final List<Lexer.Token> tokens;
@@ -20,11 +17,14 @@ public class Parser {
     }
 
     private ASTNode term() {
-        ASTNode factor = factor();
+        ASTNode node = factor();
         while (currentToken.type == Lexer.TokenType.MULTIPLY || currentToken.type == Lexer.TokenType.DIVIDE) {
+            Lexer.Token token = currentToken;
             consume(currentToken.type);
+            node = new BinaryOpNode(node, factor(), token);
+
         }
-        return term();
+        return node;
     }
 
     private void consume(Lexer.TokenType type) {
@@ -32,9 +32,9 @@ public class Parser {
             currentPos++;
             if( currentPos < tokens.size()) {
                 currentToken = tokens.get(currentPos);
-
+            } else {
+                currentToken = null;
             }
-
         } else {
             throw new ParserException("Unexpected token:" + type);
         }

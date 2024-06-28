@@ -16,7 +16,7 @@ public class Lexer implements Iterable<Lexer.Token> {
 
     }
 
-    private void tokenize() {
+    public List<Lexer.Token> tokenize() {
         while (current < input.length()) {
             char c = input.charAt(current);
             switch (c){
@@ -62,10 +62,10 @@ public class Lexer implements Iterable<Lexer.Token> {
                     } else {
                         throw new LexerException("Unsupported character:" + c);
                     }
-                    
-
             }
+            
         }
+        return tokens;
 
 
     }
