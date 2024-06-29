@@ -46,6 +46,14 @@ public class Lexer implements Iterable<Lexer.Token> {
                     tokens.add(new Token(TokenType.DIVIDE, "/"));
                     current++;
                     break;
+                case '(':
+                    tokens.add(new Token(TokenType.LPAREN, "("));
+                    current++;
+                    break;
+                case ')':
+                    tokens.add(new Token(TokenType.RPAREN, ")"));
+                    current++;
+                    break;
                 case '"':
                     tokens.add(new Token(TokenType.STRING, readString()));
                     current++;

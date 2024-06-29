@@ -55,8 +55,22 @@ public class Parser {
 
     private ASTNode factor() {
         Lexer.Token token = currentToken;
-        consume(Lexer.TokenType.NUMBER);
-       return new NumberNode(token);
+
+        if(token.type == Lexer.TokenType.NUMBER){
+            consume(Lexer.TokenType.NUMBER);
+            return new NumberNode(token);
+        } 
+
+        if (token.type == Lexer.TokenType.LPAREN){
+            consume(Lexer.TokenType.LPAREN);
+            ASTNode node = expression();
+            consume(Lexer.TokenType.RPAREN);
+            return node;
+
+        }
+
+        throw new ParserException("Unexpected token found for Factor:" + token);
+        
     }
 
 }
