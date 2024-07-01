@@ -2,6 +2,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import ast.Token;
+import ast.Token.TokenType;
+
 public class Lexer implements Iterable<Token>{
 
     private final String input;
@@ -74,7 +77,7 @@ public class Lexer implements Iterable<Token>{
                     advance();
                     break;
                 case ';':
-                    tokens.add(new Token(Token.TokenType.SEMICOLON, ";"));
+                    tokens.add(new Token(TokenType.SEMICOLON, ";"));
                     advance();
                     break;
                 case '"':

@@ -1,11 +1,10 @@
-public class AssingNode extends ASTNode{
+package ast;
+public class AssignNode extends ASTNode{
     Var left;
-    Token op;
     ASTNode right;
 
-    AssingNode(Var left, Token op, ASTNode right){
+    public AssignNode(Var left, ASTNode right){
         this.left = left;
-        this.op = op;
         this.right = right;
     }
 

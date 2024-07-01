@@ -1,4 +1,5 @@
-import java.util.List;
+import java.util.*;
+import ast.*;
 
 public class Parser {
 
@@ -13,7 +14,59 @@ public class Parser {
     }
     
     public ASTNode parse() {
+        List<ASTNode> statements = new ArrayList<>();
+        while ( currentToken != null){
+            statements.add(statement());
+            if (currentToken != null && currentToken.type == Token.TokenType.SEMICOLON){
+                consume(currentToken.type);
+            }
+        }
+        return new BlockNode(statements);
+    }
+
+    private ASTNode statement() {
+        if (currentToken.type == Token.TokenType.LBRACE) {
+            return block();
+        }
+        if (currentToken.type == Token.TokenType.VAR) {
+            return declaration();
+        }
+        if (currentToken.type == Token.TokenType.IDENTIFIER) {
+            return assignment();
+        }
         return expression();
+    }
+
+    private ASTNode assignment() {
+        Var varNode = var();
+        consume(Token.TokenType.ASSIGN);
+        return new AssignNode(varNode, expression());
+    }
+
+    private ASTNode declaration() {
+        consume(Token.TokenType.VAR);
+        Var varNode = var();
+        consume(Token.TokenType.ASSIGN);
+        return new VarDecl(varNode, expression());
+    }
+
+    private Var var() {
+        Token token = currentToken;
+        consume(Token.TokenType.IDENTIFIER);
+        return new Var(token);
+    }
+
+    private ASTNode block() {
+        consume(Token.TokenType.LBRACE);
+        ArrayList<ASTNode> statements = new ArrayList<>();
+        while(currentToken.type != Token.TokenType.RBRACE){
+            statements.add(statement());
+            if (currentToken.type == Token.TokenType.SEMICOLON){
+                consume(currentToken.type);
+            }
+        }
+        consume(Token.TokenType.RBRACE);
+        return new BlockNode(statements);
     }
 
     private ASTNode expression() {

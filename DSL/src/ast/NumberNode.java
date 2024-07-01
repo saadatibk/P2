@@ -1,3 +1,5 @@
+package ast;
+
 public class NumberNode extends ASTNode {
 
     final int value;

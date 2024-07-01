@@ -1,3 +1,5 @@
+package ast;
+
 public class BinaryOpNode extends ASTNode {
 
     ASTNode left;
