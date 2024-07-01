@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class Lexer implements Iterable<Lexer.Token> {
+public class Lexer implements Iterable<Token>{
 
     private final String input;
     private final List<Token> tokens;
@@ -10,116 +10,109 @@ public class Lexer implements Iterable<Lexer.Token> {
 
     public Lexer(String input) {
         this.input = input;
-        this.tokens = new ArrayList<Token>();
+        this.tokens = new ArrayList<>();
         this.current = 0;
         tokenize();
 
     }
 
-    public List<Lexer.Token> tokenize() {
+    public List<Token> tokenize() {
         while (current < input.length()) {
             char c = input.charAt(current);
-            switch (c){
-                case '\s': 
-                case '\t': 
-                case '\r':
-                case '\n': 
-                    current++;
-                    break;
-                case '=':
-                    tokens.add(new Token(TokenType.ASSIGNMENT,"="));
-                    current++;
-                    break;
-                case '+': 
-                    tokens.add(new Token(TokenType.PLUS, "+"));
-                    current++;
+            if (Character.isWhitespace(c)) {
+                skipWhitespace();
+                continue;
+            }
+            if (isDigit(c)) {
+                tokens.add(number());
+                continue;
+            }
+            if (isAlpha(c)) {
+                Token id = identifier();
+                if (id.value.equals("var")) {
+                    tokens.add(new Token(Token.TokenType.VAR, "var"));
+                } else {
+                    tokens.add(id);
+                }
+                continue;
+            }
+            switch (c) {
+                case '+':
+                    tokens.add(new Token(Token.TokenType.PLUS, "+"));
+                    advance();
                     break;
                 case '-':
-                    tokens.add(new Token(TokenType.MINUS, "-"));
-                    current++;
+                    tokens.add(new Token(Token.TokenType.MINUS, "-"));
+                    advance();
                     break;
                 case '*':
-                    tokens.add(new Token(TokenType.MULTIPLY, "*"));
-                    current++;
+                    tokens.add(new Token(Token.TokenType.MULTIPLY, "*"));
+                    advance();
                     break;
                 case '/':
-                    tokens.add(new Token(TokenType.DIVIDE, "/"));
-                    current++;
+                    tokens.add(new Token(Token.TokenType.DIVIDE, "/"));
+                    advance();
                     break;
                 case '(':
-                    tokens.add(new Token(TokenType.LPAREN, "("));
-                    current++;
+                    tokens.add(new Token(Token.TokenType.LPAREN, "("));
+                    advance();
                     break;
                 case ')':
-                    tokens.add(new Token(TokenType.RPAREN, ")"));
-                    current++;
+                    tokens.add(new Token(Token.TokenType.RPAREN, ")"));
+                    advance();
+                    break;
+                case '=':
+                    tokens.add(new Token(Token.TokenType.ASSIGN, "="));
+                    advance();
+                    break;
+                case '{':
+                    tokens.add(new Token(Token.TokenType.LBRACE, "{"));
+                    advance();
+                    break;
+                case '}':
+                    tokens.add(new Token(Token.TokenType.RBRACE, "}"));
+                    advance();
+                    break;
+                case ';':
+                    tokens.add(new Token(Token.TokenType.SEMICOLON, ";"));
+                    advance();
                     break;
                 case '"':
-                    tokens.add(new Token(TokenType.STRING, readString()));
-                    current++;
-                    break;
-                case '%':
-                    tokens.add(new Token(TokenType.REFERENCES, readReference()));
+                    tokens.add(new Token(Token.TokenType.STRING, readString()));
                     break;
                 default:
-                    if( isDigit(c)){
-                        tokens.add(new Token(TokenType.NUMBER, readNumber()));
-                    } else if(isAlpha(c)){
-                        String identifier = readIdentifier();
-                        tokens.add(new Token(deriveTokenType(identifier),identifier));
-                    } else {
-                        throw new LexerException("Unsupported character:" + c);
-                    }
+                    throw new RuntimeException("Unexpected character: " + c);
             }
-            
         }
         return tokens;
-
-
     }
-    private Lexer.TokenType deriveTokenType(String identifier) {
-        switch (identifier) {
-            case "config":
-                return TokenType.CONFIG;
-            case "update":
-                return TokenType.UPDATE;
-            case "compute":
-                return TokenType.COMPUTE;
-            case "show":
-                return TokenType.SHOW;
-            case "configs":
-                return TokenType.CONFIGS;
-            default:
-                return TokenType.IDENTIFIER;
+
+    private void advance() {
+        current++;
+    }
+
+    private void skipWhitespace() {
+        while (current < input.length() && Character.isWhitespace(input.charAt(current))) {
+            advance();
         }
     }
 
-    private String readIdentifier(){
+    private Token identifier(){
         StringBuilder builder = new StringBuilder();
-        //current++;
         while (current < input.length() && (isAlphaNumeric(input.charAt(current)))) {
             builder.append(input.charAt(current));
-            current++;
+            advance();
         }
-        return builder.toString();
+        return new Token(Token.TokenType.IDENTIFIER, builder.toString());
     }
-
-    private String readNumber(){
+   
+    private Token number(){
         StringBuilder builder = new StringBuilder();
         while (current < input.length() && (isDigit(input.charAt(current)))) {
             builder.append(input.charAt(current));
-            current++;
+            advance();
         }
-        return builder.toString();
-    }
-
-    private String readReference() {
-        StringBuilder builder = new StringBuilder();
-        while (current < input.length() && isAlphaNumeric(input.charAt(current)) ) {
-            builder.append(input.charAt(current));
-            current++;
-        }
-        return builder.toString();
+        return new Token(Token.TokenType.NUMBER, builder.toString());
     }
 
     private boolean isAlphaNumeric(char c) {
@@ -137,38 +130,18 @@ public class Lexer implements Iterable<Lexer.Token> {
 
     private String readString() {
         StringBuilder builder = new StringBuilder();
-        current++;
+        advance();
         while (current < input.length() && input.charAt(current) != '"') {
             builder.append(input.charAt(current));
-            current++;
+            advance();
         }
+        advance();
         return builder.toString();
     }
 
-    public static class Token{
-        final TokenType type;
-        final String value;
-
-        Token(TokenType type, String value){
-            this.type = type;
-            this.value = value;
-        }
-
-        @Override
-        public String toString() {
-            return "Token{" +
-                    "type=" + type +
-                    ", value='" + value + '\'' +
-                    '}';
-        }
-    }
-
-    enum TokenType {
-        CONFIG, UPDATE, COMPUTE,SHOW, CONFIGS, STRING, NUMBER, IDENTIFIER, REFERENCES, ASSIGNMENT, OPERATOR, LPAREN , RPAREN, PLUS, MULTIPLY, MINUS, DIVIDE ;
-    }
-
     @Override
-    public Iterator<Lexer.Token> iterator() {
+    public Iterator<Token> iterator() {
         return tokens.iterator();
     }
+
 }

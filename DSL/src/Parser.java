@@ -2,11 +2,11 @@ import java.util.List;
 
 public class Parser {
 
-    private final List<Lexer.Token> tokens;
+    private final List<Token> tokens;
     private int currentPos;
-    private Lexer.Token currentToken;
+    private Token currentToken;
 
-    Parser(List<Lexer.Token> tokens) {
+    Parser(List<Token> tokens) {
         this.tokens = tokens;
         currentPos = 0;
         currentToken = tokens.get(currentPos);
@@ -19,11 +19,10 @@ public class Parser {
     private ASTNode expression() {
         ASTNode node = term();
 
-        while (currentToken != null && (currentToken.type == Lexer.TokenType.PLUS || currentToken.type == Lexer.TokenType.MINUS)) {
-            Lexer.Token token = currentToken;
+        while (currentToken != null && (currentToken.type == Token.TokenType.PLUS || currentToken.type == Token.TokenType.MINUS)) {
+            Token token = currentToken;
             consume(currentToken.type);
             node = new BinaryOpNode(node, term(), token);
-
         }
         return node;
     }
@@ -31,8 +30,8 @@ public class Parser {
     private ASTNode term() {
         ASTNode node = factor();
 
-        while (currentToken != null && (currentToken.type == Lexer.TokenType.MULTIPLY || currentToken.type == Lexer.TokenType.DIVIDE)) {
-            Lexer.Token token = currentToken;
+        while (currentToken != null && (currentToken.type == Token.TokenType.MULTIPLY || currentToken.type == Token.TokenType.DIVIDE)) {
+            Token token = currentToken;
             consume(currentToken.type);
             node = new BinaryOpNode(node, factor(), token);
 
@@ -40,7 +39,7 @@ public class Parser {
         return node;
     }
 
-    private void consume(Lexer.TokenType type) {
+    private void consume(Token.TokenType type) {
         if (currentToken != null && currentToken.type == type) {
             currentPos++;
             if( currentPos < tokens.size()) {
@@ -54,17 +53,17 @@ public class Parser {
     }
 
     private ASTNode factor() {
-        Lexer.Token token = currentToken;
+        Token token = currentToken;
 
-        if(token.type == Lexer.TokenType.NUMBER){
-            consume(Lexer.TokenType.NUMBER);
+        if(token.type == Token.TokenType.NUMBER){
+            consume(Token.TokenType.NUMBER);
             return new NumberNode(token);
         } 
 
-        if (token.type == Lexer.TokenType.LPAREN){
-            consume(Lexer.TokenType.LPAREN);
+        if (token.type == Token.TokenType.LPAREN){
+            consume(Token.TokenType.LPAREN);
             ASTNode node = expression();
-            consume(Lexer.TokenType.RPAREN);
+            consume(Token.TokenType.RPAREN);
             return node;
 
         }

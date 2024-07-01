@@ -2,10 +2,10 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-        String input = "2 * 3 -  ";
+        String input = "2 * 3 - 23 ";
         Lexer lexer = new Lexer(input);
-        List<Lexer.Token> tokens = lexer.tokenize();
-        for (Lexer.Token token : tokens) {
+        List<Token> tokens = lexer.tokenize();
+        for (Token token : tokens) {
             System.out.println(token); 
         }
         Parser parser = new Parser(tokens);

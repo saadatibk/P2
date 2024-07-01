@@ -2,9 +2,9 @@ public class BinaryOpNode extends ASTNode {
 
     ASTNode left;
     ASTNode right;
-    Lexer.Token operationToken;
+    Token operationToken;
 
-    public BinaryOpNode(ASTNode left, ASTNode right, Lexer.Token operation) {
+    public BinaryOpNode(ASTNode left, ASTNode right, Token operation) {
         this.left = left;
         this.right = right;
         this.operationToken = operation;
