@@ -5,7 +5,11 @@ import ast.Token;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-        String input = "2 * 3 - 23 ";
+        String input = """
+                var x = 5;
+                var y = x + 2;
+                y = x * (2 + 3);
+                """;;
         Lexer lexer = new Lexer(input);
         List<Token> tokens = lexer.tokenize();
         for (Token token : tokens) {

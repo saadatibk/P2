@@ -82,7 +82,6 @@ public class Parser {
 
     private ASTNode term() {
         ASTNode node = factor();
-
         while (currentToken != null && (currentToken.type == Token.TokenType.MULTIPLY || currentToken.type == Token.TokenType.DIVIDE)) {
             Token token = currentToken;
             consume(currentToken.type);
@@ -118,7 +117,10 @@ public class Parser {
             ASTNode node = expression();
             consume(Token.TokenType.RPAREN);
             return node;
-
+        }
+        if (token.type == Token.TokenType.IDENTIFIER) {
+            consume(Token.TokenType.IDENTIFIER);
+            return new Var(token);
         }
 
         throw new ParserException("Unexpected token found for Factor:" + token);
