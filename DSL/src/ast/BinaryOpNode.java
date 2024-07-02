@@ -2,9 +2,9 @@ package ast;
 
 public class BinaryOpNode extends ASTNode {
 
-    ASTNode left;
-    ASTNode right;
-    Token operationToken;
+    public ASTNode left;
+    public ASTNode right;
+    public Token operationToken;
 
     public BinaryOpNode(ASTNode left, ASTNode right, Token operation) {
         this.left = left;

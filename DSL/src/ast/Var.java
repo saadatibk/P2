@@ -1,7 +1,7 @@
 package ast;
 public class Var extends ASTNode{
-    Token token;
-    String name;
+    public Token token;
+    public String name;
 
     public Var(Token token){
         this.token = token;
