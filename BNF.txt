@@ -1,0 +1,26 @@
+<program> ::= <statement> | <statement> <program>
+<statement> ::= <assignment> ";" 
+              | <expression> ";" 
+              | <if-statement>
+              | <print-statement> ";"
+<assignment> ::= "var" <identifier> "=" <expression>
+<if-statement> ::= "if" "(" <expression> ")" "{" <statement-list> "}" <else-clause>?
+<else> ::= "else" "{" <statement-list> "}"
+<statement-list> ::= <statement> | <statement> <statement-list>
+<print-statement> ::= "print" <identifier>
+<expression> ::= <term> 
+               | <term> "+" <expression> 
+               | <term> "-" <expression>
+               | <term> ">" <expression>
+               | <term> "<" <expression>
+<term> ::= <factor> 
+         | <factor> "*" <term> 
+         | <factor> "/" <term>
+<factor> ::= <number> 
+           | <identifier> 
+           | "(" <expression> ")"
+<identifier> ::= <letter> | <letter> <identifier>
+<number> ::= <digit> | <digit> <number>
+<letter> ::= "a" | "b" | "c" | ... | "x" | "y" | "z" 
+           | "A" | "B" | "C" | ... | "X" | "Y" | "Z"
+<digit> ::= "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"
