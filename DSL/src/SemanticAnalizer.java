@@ -2,6 +2,7 @@ import java.util.*;
 import ast.*;
 
 public class SemanticAnalizer {
+
    private final Stack<Set<String>> scopes = new Stack<>();
 
     void visit(ASTNode node){
@@ -9,7 +10,7 @@ public class SemanticAnalizer {
             visit(((BinaryOpNode)node).left);
             visit(((BinaryOpNode)node).right);
         } else if (node instanceof NumberNode){
-    
+            
         } else if (node instanceof VarDecl varDeclNode){
            String varName = varDeclNode.varNode.name;
            if (!isVariableDefined(varName)) {
@@ -33,7 +34,6 @@ public class SemanticAnalizer {
                 visit(statement);
             }
             scopes.pop();
-
 
         } else {
             throw new ParserException("Unexpected AST Node:" + node.getClass().getCanonicalName());

@@ -1,38 +1,58 @@
-//import java.util.HashMap;
-//import java.util.Map;
+import java.util.*;
+import ast.*;
 
 public class Interpreter {
 
-    //private final Map<String, Integer> valueTable = new HashMap();
-    /* 
-
-    int visit(ASTNode node){
-        
-        if (node instanceof BinaryOpNode){
-             
-        } else if (node instanceof NumberNode){
+    private final Map<String, Integer> valueTable = new HashMap();
     
+    int visit(ASTNode node){
+
+        if (node instanceof BinaryOpNode binaryOpNode){
+
+             int left = visit(binaryOpNode.left);
+             int right = visit(binaryOpNode.right);
+             switch(binaryOpNode.operationToken.type){
+                case MINUS -> {return left - right;}
+                case PLUS -> {return left + right;}
+                case MULTIPLY -> {return left * right;}
+                case DIVIDE -> {return left / right;}
+                default -> throw new ParserException("Unexpected token: " + binaryOpNode.operationToken);
+             }
+
+        } else if (node instanceof NumberNode numberNode){
+
+            return numberNode.value;
+
         } else if (node instanceof Var var){
+
             String varName = var.name;
             if (!valueTable.containsKey(varName)){
-                // throw new ParserException
+                throw new ParserException("Variable not found: " + varName);
             }
- 
+            return valueTable.get(varName);
+
         } else if (node instanceof VarDecl varDecl){
+
             int rightExpressionResult = visit(varDecl.expr);
-             valueTable.put(vardecl.varNode.name, rightExpressionResult);
-             return rightExpressionResult;
+            valueTable.put(varDecl.varNode.name, rightExpressionResult);
+            return rightExpressionResult;
 
-        } else if (node instanceof Assing){
+        } else if (node instanceof AssignNode assignNode){
+            
+            int rightExpressionResult = visit(assignNode.right);
+            valueTable.put(assignNode.left.name, rightExpressionResult);
 
-        } else if (node instanceof Block block){
+        } else if (node instanceof BlockNode block){
 
-        else {
-            throw new ParserException("Unex")
+            int result = 0;
+            for (ASTNode statement : block.statements){
+                result = visit(statement);
+            }
+            return result;
+
+        } else {
+            throw new ParserException("Unexpected AST Node: " + node.getClass().getCanonicalName());
         }
-        
-    }*/
-
-    
-
+        return 0;
+    }
 }
