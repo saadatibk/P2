@@ -1,7 +1,7 @@
 package ast;
 public class AssignNode extends ASTNode{
-    Var left;
-    ASTNode right;
+    public Var left;
+    public ASTNode right;
 
     public AssignNode(Var left, ASTNode right){
         this.left = left;
@@ -12,5 +12,4 @@ public class AssignNode extends ASTNode{
     public void print(String indent){
 
     }
-
 }

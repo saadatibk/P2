@@ -2,7 +2,7 @@ package ast;
 import java.util.List;
 
 public class BlockNode extends ASTNode{
-    List<ASTNode> statements;
+    public List<ASTNode> statements;
 
     public BlockNode(List<ASTNode> statements){
         this.statements = statements;
