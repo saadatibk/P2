@@ -42,11 +42,8 @@ public class SemanticAnalizer {
     
     private boolean isVariableDefined(String varName){
         for(Set<String> scope: scopes){
-            if(scope.contains(varName )) return true;
+            if(scope.contains(varName)) return true;
         }
+        return false;
     }
-    
-
-
-
 }
