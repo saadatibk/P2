@@ -34,6 +34,12 @@ public class Lexer implements Iterable<Token>{
                 Token id = identifier();
                 if (id.value.equals("var")) {
                     tokens.add(new Token(Token.TokenType.VAR, "var"));
+                } else if (id.value.equals("if")) {
+                    tokens.add(new Token(Token.TokenType.IF, "if"));
+                } else if (id.value.equals("else")){
+                    tokens.add(new Token(Token.TokenType.ELSE, "else"));
+                } else if (id.value.equals("print")){
+                    tokens.add(new Token(Token.TokenType.PRINT, "print"));
                 } else {
                     tokens.add(id);
                 }
@@ -54,6 +60,14 @@ public class Lexer implements Iterable<Token>{
                     break;
                 case '/':
                     tokens.add(new Token(Token.TokenType.DIVIDE, "/"));
+                    advance();
+                    break;
+                case '>':
+                    tokens.add(new Token(Token.TokenType.GREATERTHAN, ">"));
+                    advance();
+                    break;
+                case '<':
+                    tokens.add(new Token(Token.TokenType.LESSTHAN, "<"));
                     advance();
                     break;
                 case '(':
