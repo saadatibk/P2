@@ -34,10 +34,38 @@ public class Parser {
         if (currentToken.type == Token.TokenType.IDENTIFIER) {
             return assignment();
         }
+        if (currentToken.type == Token.TokenType.IF) {
+            return ifStatement();
+        }
+        if (currentToken.type == Token.TokenType.PRINT) {
+            return printStatement();
+        }
         return expression();
     }
 
+    private ASTNode printStatement() {
+        consume(Token.TokenType.PRINT);
+        Var varNode = var();
+        consume(Token.TokenType.SEMICOLON);
+        return new PrintNode(varNode);
+    }
+
+    private ASTNode ifStatement() {
+        consume(Token.TokenType.IF);
+        consume(Token.TokenType.LPAREN);
+        ASTNode condition = expression();
+        consume(Token.TokenType.RPAREN);
+        ASTNode thenBranch = statement();
+        ASTNode elseBranch = null;
+        if (currentToken != null && currentToken.type == Token.TokenType.ELSE) {
+            consume(Token.TokenType.ELSE);
+            elseBranch = statement();
+        }
+        return new IfNode(condition, thenBranch, elseBranch);
+    }
+
     private ASTNode assignment() {
+        consume(Token.TokenType.VAR);
         Var varNode = var();
         consume(Token.TokenType.ASSIGN);
         return new AssignNode(varNode, expression());
@@ -72,7 +100,10 @@ public class Parser {
     private ASTNode expression() {
         ASTNode node = term();
 
-        while (currentToken != null && (currentToken.type == Token.TokenType.PLUS || currentToken.type == Token.TokenType.MINUS)) {
+        while (currentToken != null && (currentToken.type == Token.TokenType.PLUS || 
+                                        currentToken.type == Token.TokenType.MINUS ||
+                                        currentToken.type == Token.TokenType.GREATERTHAN || 
+                                        currentToken.type == Token.TokenType.LESSTHAN)) {
             Token token = currentToken;
             consume(currentToken.type);
             node = new BinaryOpNode(node, term(), token);
@@ -82,11 +113,11 @@ public class Parser {
 
     private ASTNode term() {
         ASTNode node = factor();
-        while (currentToken != null && (currentToken.type == Token.TokenType.MULTIPLY || currentToken.type == Token.TokenType.DIVIDE)) {
+        while (currentToken != null && (currentToken.type == Token.TokenType.MULTIPLY || 
+                                        currentToken.type == Token.TokenType.DIVIDE)) {
             Token token = currentToken;
             consume(currentToken.type);
             node = new BinaryOpNode(node, factor(), token);
-
         }
         return node;
     }

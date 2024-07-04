@@ -16,6 +16,8 @@ public class Interpreter {
                 case PLUS -> {return left + right;}
                 case MULTIPLY -> {return left * right;}
                 case DIVIDE -> {return left / right;}
+                case GREATERTHAN -> {return left > right ? 1 : 0;}
+                case LESSTHAN -> {return left < right ? 1 : 0;}
                 default -> throw new ParserException("Unexpected token: " + binaryOpNode.operationToken);
              }
 
@@ -50,6 +52,22 @@ public class Interpreter {
             }
             return result;
 
+        } else if (node instanceof IfNode ifNode) {
+
+            int conditionResult = visit(ifNode.getCondition());
+            if (conditionResult != 0) {
+                return visit(ifNode.getThenBranch());
+            } else if (ifNode.getElseBranch() != null) {
+                return visit(ifNode.getElseBranch());
+            }
+            return 0;
+    
+        } else if (node instanceof PrintNode printNode) {
+    
+            int value = visit(printNode.getVariable());
+            System.out.println(value);
+            return value;
+    
         } else {
             throw new ParserException("Unexpected AST Node: " + node.getClass().getCanonicalName());
         }

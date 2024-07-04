@@ -34,7 +34,14 @@ public class SemanticAnalizer {
                 visit(statement);
             }
             scopes.pop();
-
+        } else if (node instanceof IfNode ifNode) {
+            visit(ifNode.getCondition());
+            visit(ifNode.getThenBranch());
+            if (ifNode.getElseBranch() != null) {
+                visit(ifNode.getElseBranch());
+            }
+        } else if (node instanceof PrintNode printNode) {
+            visit(printNode.getVariable());
         } else {
             throw new ParserException("Unexpected AST Node:" + node.getClass().getCanonicalName());
         }

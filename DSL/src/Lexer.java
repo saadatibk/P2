@@ -16,7 +16,6 @@ public class Lexer implements Iterable<Token>{
         this.tokens = new ArrayList<>();
         this.current = 0;
         tokenize();
-
     }
 
     public List<Token> tokenize() {
