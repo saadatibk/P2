@@ -5,25 +5,25 @@ A simple interpreter for a custom programming language with basic arithmetic, va
 ## Table of Contents
 
 * [Introduction](#introduction)
-* [Features](#Features)
-* [Installation](#Installation)
-* [Usage](#Usage)
-* [BNF Grammar](#BNF_Grammar)
-* [Examples](#Examples)
+* [Features](#features)
+* [Installation](#installation)
+* [Usage](#usage)
+* [BNF Grammar](#bnf-grammar)
+* [Examples](#examples)
 * [Contributing](#contributing)
   
 ## Introduction {#introduction}
 
 This project is an implementation of an interpreter for a simple programming language. The interpreter can handle basic arithmetic operations, variable assignments, conditional statements (if-else), and print statements.
 
-## Features {#Features}
+## Features {#features}
 
 * Arithmetic operations: +, -, *, /, >, <
 * Variable declarations and assignments
 * Conditional statements (if-else)
 * Print statements
   
-## Installation {#Installation}
+## Installation {#installation}
 
 To run the interpreter, you need to have Java installed on your system. Follow these steps to set up the project:
 
@@ -40,7 +40,7 @@ Run the interpreter:
 ```
 java -cp bin Interpreter
 ```
-## Usage {#Usage}
+## Usage {#usage}
 
 Create a new file with your program code, for example, program.txt.
 
@@ -48,7 +48,7 @@ Run the interpreter and pass your program file as an argument:
 ```
 java -cp bin Interpreter program.txt
 ```
-## BNF Grammar {#BNF_Grammar}
+## BNF Grammar {#bnf-grammar}
 
 #The language follows the BNF grammar below:
 ```
@@ -79,7 +79,7 @@ java -cp bin Interpreter program.txt
            | "A" | "B" | "C" | ... | "X" | "Y" | "Z"
 <digit> ::= "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"
 ```
-## Examples {#Examples}
+## Examples {#examples}
 
 Example Program
 ```
