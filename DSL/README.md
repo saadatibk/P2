@@ -1,18 +1,108 @@
-## Getting Started
+##Simplified Python Language Interpreter
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+A simple interpreter for a python programming language with basic arithmetic, variable assignment, conditional statements, and print functionality.
 
-## Folder Structure
+#Table of Contents
 
-The workspace contains two folders by default, where:
+#Introduction
+Features
+Installation
+Usage
+BNF Grammar
+Examples
+Contributing
+License
+Introduction
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+This project is an implementation of an interpreter for a simple programming language. The interpreter can handle basic arithmetic operations, variable assignments, conditional statements (if-else), and print statements.
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
+#Features
 
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
+Arithmetic operations: +, -, *, /, >, <
+Variable declarations and assignments
+Conditional statements (if-else)
+Print statements
+Installation
 
-## Dependency Management
+#To run the interpreter, you need to have Java installed on your system. Follow these steps to set up the project:
 
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+Clone the repository:
+
+bash
+Копировать код
+git clone https://github.com/yourusername/simple-language-interpreter.git
+cd simple-language-interpreter
+Compile the Java files:
+
+bash
+Копировать код
+javac -d bin src/*.java
+Run the interpreter:
+
+bash
+Копировать код
+java -cp bin Interpreter
+Usage
+
+Create a new file with your program code, for example, program.txt.
+
+Run the interpreter and pass your program file as an argument:
+
+bash
+Копировать код
+java -cp bin Interpreter program.txt
+BNF Grammar
+
+#The language follows the BNF grammar below:
+
+go
+Копировать код
+<program> ::= <statement> | <statement> <program>
+<statement> ::= <assignment> ";" 
+              | <expression> ";" 
+              | <if-statement>
+              | <print-statement> ";"
+<assignment> ::= "var" <identifier> "=" <expression>
+<if-statement> ::= "if" "(" <expression> ")" "{" <statement-list> "}" <else-clause>?
+<else-clause> ::= "else" "{" <statement-list> "}"
+<statement-list> ::= <statement> | <statement> <statement-list>
+<print-statement> ::= "print" <identifier>
+<expression> ::= <term> 
+               | <term> "+" <expression> 
+               | <term> "-" <expression>
+               | <term> ">" <expression>
+               | <term> "<" <expression>
+<term> ::= <factor> 
+         | <factor> "*" <term> 
+         | <factor> "/" <term>
+<factor> ::= <number> 
+           | <identifier> 
+           | "(" <expression> ")"
+<identifier> ::= <letter> | <letter> <identifier>
+<number> ::= <digit> | <digit> <number>
+<letter> ::= "a" | "b" | "c" | ... | "x" | "y" | "z" 
+           | "A" | "B" | "C" | ... | "X" | "Y" | "Z"
+<digit> ::= "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"
+#Examples
+
+Example Program
+plaintext
+Копировать код
+var x = 10;
+print x;
+if (x > 5) {
+    print x;
+} else {
+    var y = 5;
+    print y;
+}
+#Running the Example
+Save the above program to a file named example.txt.
+Run the interpreter:
+bash
+Копировать код
+java -cp bin Interpreter example.txt
+Contributing
+
+Contributions are welcome! Please open an issue or submit a pull request for any changes you would like to make.
+
