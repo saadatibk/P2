@@ -1,8 +1,8 @@
-#Simple Language Interpreter
+##Simple Language Interpreter
 
 A simple interpreter for a custom programming language with basic arithmetic, variable assignment, conditional statements, and print functionality.
 
-#Table of Contents
+##Table of Contents
 
 Introduction
 Features
