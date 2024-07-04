@@ -1,8 +1,8 @@
-Simple Language Interpreter
+#Simple Language Interpreter
 
 A simple interpreter for a custom programming language with basic arithmetic, variable assignment, conditional statements, and print functionality.
 
-Table of Contents
+#Table of Contents
 
 Introduction
 Features
@@ -16,7 +16,7 @@ Introduction
 
 This project is an implementation of an interpreter for a simple programming language. The interpreter can handle basic arithmetic operations, variable assignments, conditional statements (if-else), and print statements.
 
-Features
+#Features
 
 Arithmetic operations: +, -, *, /, >, <
 Variable declarations and assignments
@@ -29,34 +29,30 @@ To run the interpreter, you need to have Java installed on your system. Follow t
 Clone the repository:
 
 bash
-Копировать код
+
 git clone https://github.com/yourusername/simple-language-interpreter.git
 cd simple-language-interpreter
 Compile the Java files:
 
 bash
-Копировать код
+
 javac -d bin src/*.java
 Run the interpreter:
 
 bash
-Копировать код
+
 java -cp bin Interpreter
-Usage
+#Usage
 
 Create a new file with your program code, for example, program.txt.
 
 Run the interpreter and pass your program file as an argument:
 
-bash
-Копировать код
 java -cp bin Interpreter program.txt
-BNF Grammar
+#BNF Grammar
 
-The language follows the BNF grammar below:
+#The language follows the BNF grammar below:
 
-go
-Копировать код
 <program> ::= <statement> | <statement> <program>
 <statement> ::= <assignment> ";" 
               | <expression> ";" 
@@ -83,11 +79,10 @@ go
 <letter> ::= "a" | "b" | "c" | ... | "x" | "y" | "z" 
            | "A" | "B" | "C" | ... | "X" | "Y" | "Z"
 <digit> ::= "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"
-Examples
+
+#Examples
 
 Example Program
-plaintext
-Копировать код
 var x = 10;
 print x;
 if (x > 5) {
@@ -99,9 +94,8 @@ if (x > 5) {
 Running the Example
 Save the above program to a file named example.txt.
 Run the interpreter:
-bash
-Копировать код
+
 java -cp bin Interpreter example.txt
-Contributing
+#Contributing
 
 Contributions are welcome! Please open an issue or submit a pull request for any changes you would like to make.
