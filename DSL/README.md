@@ -12,18 +12,17 @@ A simple interpreter for a custom programming language with basic arithmetic, va
 * [Examples](#examples)
 * [Contributing](#contributing)
   
-## Introduction {#introduction}
-
+## Introduction 
 This project is an implementation of an interpreter for a simple programming language. The interpreter can handle basic arithmetic operations, variable assignments, conditional statements (if-else), and print statements.
 
-## Features {#features}
+## Features
 
 * Arithmetic operations: +, -, *, /, >, <
 * Variable declarations and assignments
 * Conditional statements (if-else)
 * Print statements
   
-## Installation {#installation}
+## Installation 
 
 To run the interpreter, you need to have Java installed on your system. Follow these steps to set up the project:
 
@@ -40,7 +39,7 @@ Run the interpreter:
 ```
 java -cp bin Interpreter
 ```
-## Usage {#usage}
+## Usage
 
 Create a new file with your program code, for example, program.txt.
 
@@ -48,7 +47,7 @@ Run the interpreter and pass your program file as an argument:
 ```
 java -cp bin Interpreter program.txt
 ```
-## BNF Grammar {#bnf-grammar}
+## BNF Grammar 
 
 #The language follows the BNF grammar below:
 ```
@@ -79,7 +78,7 @@ java -cp bin Interpreter program.txt
            | "A" | "B" | "C" | ... | "X" | "Y" | "Z"
 <digit> ::= "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"
 ```
-## Examples {#examples}
+## Examples 
 
 Example Program
 ```
@@ -97,6 +96,6 @@ Run the interpreter:
 ```
 java -cp bin Interpreter example.txt
 ```
-## Contributing {#contributing}
+## Contributing 
 
 Contributions are welcome! Please open an issue or submit a pull request for any changes you would like to make.
